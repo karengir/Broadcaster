@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit record</title>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Merriweather:700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <div class="logo">
+      <h4><a href="homePage.html">Broadcaster</a></h4>
+    </div>
+    <ul class="components">
+      <li><a href="LogIn.html">Log Out</a></li>
+      <li><a href="userProfile.html">User Profile</a></li>
+      <li><a href="myRecords.html">My records</a></li>
+    </ul>
+  </nav>
+<div class="sign-form">
+	<form action="" method="">
+		<div class="editRecord">
+		<div class="lab">	
+		<label>Comment:</label>
+		<textarea>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua.</textarea><br>
+		</div>
+		<div class="lab">	
+		<label id="Location">Location:</label>
+		<textarea>KK 20 ST 5</textarea><br>
+		</div>	
+		<div class="lab2">	
+		<label>Add image/video</label>
+		<input type="file" name="" id="input" accept="image/*,video/*"><br>
+		</div>
+		<button  class="button"> <a href="myRecords.html">Edit</a> </button><br>
+		</div>
+	</form>
+</div>
+</body>
+</html>
