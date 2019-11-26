@@ -9,7 +9,7 @@
 <body>
   <nav>
     <div class="logo">
-      <h4><a href="homePage.html">Broadcaster</a></h4>
+      <h4><a href="index.html">Broadcaster</a></h4>
     </div>
     <ul class="components">
       <li><a href="LogIn.html">Log Out</a></li>
@@ -20,15 +20,15 @@
 		<table>
 			<tr>
 				<th>Id</th>
-				<th>create On</th>
+				<th>Created On</th>
 				<th>CreatedBy</th>
-				<th>title</th>
-				<th>type</th>
-				<th>location</th>
-				<th>status</th>
-			    <th>images</th>
-			    <th>videos</th>
-			    <th>comment</th>
+				<th>Title</th>
+				<th>Type</th>
+				<th>Location</th>
+				<th>Status</th>
+			    <th>Images</th>
+			    <th>Videos</th>
+			    <th> </th>
 			</tr>
 			<tr>
 				<td>1</td>
@@ -37,10 +37,14 @@
 				<td>Corruption</td>
 				<td>red-flag</td>
 				<td>kacyiru</td>
-				<td>yet to be resolved</td>
+				<td><select id="status" name="">
+						<option>Resolved</option>
+						<option>Yet to be resolved</option>
+						<option>Rejected</option>
+					</select></td>
 				<td>No image</td>
 				<td>No video</td>
-				<td></td>
+				<td><button class="adminbutton"><a href="adminPage.html">Update</a></button></td>
 			</tr>
 			<tr>
 				<td>2</td>
@@ -49,10 +53,14 @@
 				<td>robbery</td>
 				<td>red-flag</td>
 				<td>Gisozi</td>
-				<td>resolved</td>
+				<td><select id="status" name="">
+						<option>Resolved</option>
+						<option>Yet to be resolved</option>
+						<option>Rejected</option>
+					</select></td>
 				<td>No image</td>
 				<td>No video</td>
-				<td></td>
+				<td><button class="adminbutton"><a href="adminPage.html">Update</a></button></td>
 			</tr>
 			<tr>
 				<td>3</td>
@@ -61,14 +69,21 @@
 				<td>Fire incident</td>
 				<td>red-flag</td>
 				<td>Gakinjiro</td>
-				<td>yet to be resolved</td>
+				<td><select id="status" name="">
+						<option>Resolved</option>
+						<option>Yet to be resolved</option>
+						<option>Rejected</option>
+					</select></td>
 				<td>No image</td>
 				<td>No video</td>
-				<td></td>
+				<td><button class="adminbutton"><a href="adminPage.html">Update</a></button></td>
 			</tr>
 		</table>
 	</form>
 </div>
+<div class="footer">
+		<p>Copyrights</p>
+	  </div>
 </body>
 </html>
 
