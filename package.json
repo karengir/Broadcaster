@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node app.js"
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 10000 --exit server/test/user.test.js ",
+    "start": "nodemon --exec babel-node ./server/app.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "eslint": "^6.7.1",
