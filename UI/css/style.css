@@ -198,6 +198,31 @@ nav {
 	width: 15%;
 }
 
+.adminbutton{
+	background-color: #117d2b;
+	height: 20px;
+	border-radius: 6px;
+	border: none;
+	outline: none;
+	margin:5px;
+	width: 70%;
+	color: #d9d7d0
+}
+
+.adminbutton a{
+	text-decoration: none;
+	color: #d9d7d0;
+}
+
+.adminbutton:hover{
+	background-color: #0a631f;
+}
+
+#status{
+	height: 28px;
+	width: 100%;
+}
+
 .incident{
 	display: flex;
 	width: 30%;
@@ -261,7 +286,7 @@ table,th {
 }
 
 table, tr{
-	height: 30px;
+	height: 33px;
 }
 
 table, tr:hover{
@@ -270,12 +295,13 @@ table, tr:hover{
 
 table {
 	border: none;
-	width: 90%;
-	margin-top: 30px;
+	width: 93%;
 	margin-left: 25px;
 	background-color: #d9d7d0;
 	font-family: 'Vollkorn', serif;
 	font-size: 18px;
+	margin: auto;
+    margin-top: 5%;
 }
 
 hr{
@@ -310,11 +336,6 @@ hr{
 	font-size: 18px;
 	font-family: 'Crete Round', serif;
 }
- 
-/* .myRecords{
-	background-color: #e0dfde;
-	width: 100%; 
-} */
 
 .index{
 	align:center;
