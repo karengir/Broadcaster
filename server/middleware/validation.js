@@ -41,9 +41,31 @@ const signUp = (req, res, next) => {
     next();
 };
 
+const signIn = (req, res, next) => {
+    const fields = Joi.object({
+        email: Joi.string()
+            .strict()
+            .trim()
+            .required()
+            .email(),
+        password: Joi.string()
+            .strict()
+            .trim()
+            .required()
+            .min(5)
+    })
+    const output = fields.validate(req.body);
+    if(output.error != null) {
+        return res.status(400).json({
+            status: 400,
+            error: `${output.error.details[0].message}`
+        });
+    }
+    next();
+    };
 
 
-export default signUp;
+export  {signUp,signIn};
 
 
 
