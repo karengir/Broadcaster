@@ -4,11 +4,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const tokenVerify = (req,res,next)=>{ 
+const tokenVerify = (req,res,next) => { 
     try {
         const token = req.header('token');
         const valid = jwt.verify(token, process.env.SECRET);
         req.user = valid;
+        
+        // console.log(token)
         next();
     } catch (error) {
         res.status(400).json({
