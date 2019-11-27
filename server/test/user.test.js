@@ -178,4 +178,14 @@ describe('first page test', ()=> {
             });
     });
 
+    it("user should be able to view all red-flags", done => {
+        chai.request(app).get("/api/v1/red-flags/red-flags")
+            .send(redflag)
+            .end((err,res) => {
+                res.should.have.status(200);
+                res.body.should.be.an("object");
+                done();
+            });
+    });
+
 });

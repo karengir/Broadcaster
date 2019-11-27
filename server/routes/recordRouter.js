@@ -10,6 +10,7 @@ const router = Router();
 router.post('/', createRecord, tokenVerify, (req,res) => {
     recordController.AddRecord(req,res);
 });
+router.get('/red-flags', recordController.allRedflags);
 
 
 export default router;
