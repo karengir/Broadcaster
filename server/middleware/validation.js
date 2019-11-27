@@ -64,8 +64,41 @@ const signIn = (req, res, next) => {
     next();
     };
 
+    const createRecord = (req, res, next) => {
+        const fields = Joi.object({
+            title: Joi.string()
+                .strict()
+                .trim()
+                .required(),
+            type: Joi.string()
+                .strict()
+                .trim()
+                .required(),
+            location: Joi.string()
+                .strict()
+                .trim()
+                .required(),
+            status: Joi.string()
+                .strict()
+                .trim()
+                .required(),
+            comment: Joi.string()
+                .strict()
+                .trim()
+                .required()
+        });
+        const output = fields.validate(req.body);
+        if(output.error != null){
+            return res.status(400).json({
+                status: 400,
+                error: `${output.error.details[0].message}`
+        });
+        }  
+        next(); 
+    };
 
-export  {signUp,signIn};
+
+export  {signUp,signIn,createRecord};
 
 
 

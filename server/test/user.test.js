@@ -4,10 +4,12 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import users from '../models/users';
 import app from '../app';
-
+import MakeToken from '../helper/tokenGen';
 
 chai.use(chaiHttp);
 chai.should();
+
+const tok = MakeToken('kgiramata%7@gmail.com');
 
 const user = {
     firstname: "Giramata",
@@ -24,6 +26,21 @@ const logUser = {
     password: "1234567"
 }
 
+const redflag = {
+    title: "robbery",
+    type : "red-flag",
+    comment : "Urgent",
+    location : "KG 30 ST 5",
+    status : "yet to be resolved",
+}
+
+const redflag2 = {
+    title: "",
+    type : "red-flag",
+    comment : "Urgent",
+    location : "KG 30 ST 5",
+    status : "yet to be resolved",
+}
 
 
 describe('sign Up tests', ()=> {
@@ -135,3 +152,30 @@ describe('first page test', ()=> {
             });
     });
  });
+
+ describe(' record tests', ()=> {
+
+    it("user should be able to create a record", done => {
+        chai.request(app).post("/api/v1/red-flags/")
+            .set('token', tok)
+            .send(redflag)
+            .end((err,res) => {
+                res.should.have.status(201);
+                res.body.should.have.property("message", "record created successfully");
+                res.body.should.be.a("object");
+                done();
+            });
+    });
+    it("user should not be able to create a record when invalid title", done => {
+        chai.request(app).post("/api/v1/red-flags/")
+            .set('token', tok)
+            .send(redflag2)
+            .end((err,res) => {
+                res.should.have.status(400);
+                res.body.should.have.property('error','"title" is not allowed to be empty' )
+                res.body.should.be.an("object");
+                done();
+            });
+    });
+
+});
