@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable node/no-unsupported-features/es-syntax */
 import moment from 'moment';
 import records from '../models/record';
@@ -36,6 +37,23 @@ class recordController{
             status:200,
             data: records
         });
+    }
+
+    static getSingleRedflag (req, res){
+        const id = parseInt(req.params.redflagid)
+        const flag = records.find(rec=> rec.id === id)
+
+        if(flag){
+            res.status(200).json({
+                status: 200,
+                data: flag
+            });
+        } else {
+            res.status(404).json({
+                status:404,
+                message: 'Record not found'
+            })
+        }
     }
 }
 
