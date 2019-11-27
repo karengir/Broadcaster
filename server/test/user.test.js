@@ -9,6 +9,7 @@ import MakeToken from '../helper/tokenGen';
 chai.use(chaiHttp);
 chai.should();
 
+
 const tok = MakeToken('kgiramata%7@gmail.com');
 
 const user = {
@@ -208,5 +209,18 @@ describe('first page test', ()=> {
                 done();
             });
     });
+
+    it("user should be able to delete a record they created", done => {
+        chai.request(app).delete("api/v1/red-flags/1")
+            .set('token', tok)
+            .send()
+            .end((err,res) => {
+                console.log(res);
+                // res.should.have.status(200);
+                // res.body.should.have.property('message','red-flag record has been deleted' )
+                // res.body.should.be.an("object");
+                done();
+            });
+    });    
 
 });

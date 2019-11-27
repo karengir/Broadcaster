@@ -55,6 +55,34 @@ class recordController{
             })
         }
     }
+
+    static  deleteRedflags(req,res){
+        console.log('Controller is being accessed')
+        const id = parseInt(req.params.redflagid, 10);
+        const flag = records.find(rec => rec.id === id);
+
+        if(flag){
+            if(flag.createdBy === req.user.id){
+                records.splice(records.indexOf(flag),1);
+                return res.status(200).json({
+                    status: 200,
+                    data: {
+                        id: flag.id,
+                        message:'red-flag record has been deleted'
+                    }
+                });
+            }
+                return res.status(400).json({
+                    status:400,
+                    error:'cannot delete record you did not create'
+                });
+        }
+            return  res.status(404).json({
+                status: 404,
+                error: 'No record found '
+        });
+    
+}
 }
 
 export default recordController;

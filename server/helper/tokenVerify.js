@@ -9,9 +9,10 @@ const tokenVerify = (req,res,next)=>{
         const token = req.header('token');
         const valid = jwt.verify(token, process.env.SECRET);
         req.user = valid;
+        console.log(token)
         next();
     } catch (error) {
-        res.status(400).json({
+       return res.status(400).json({
             status: 400,
             message: 'invalid token'
         });
