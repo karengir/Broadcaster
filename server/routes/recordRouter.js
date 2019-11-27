@@ -12,5 +12,8 @@ router.post('/', createRecord, tokenVerify, (req,res) => {
 });
 router.get('/red-flags', recordController.allRedflags);
 
+router.get('/:redflagid', (req, res) => {
+    recordController.getSingleRedflag(req,res);
+});
 
 export default router;
