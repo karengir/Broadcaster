@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../server/models/users.js"],"names":["users"],"mappings":";;;;;;;AAAA;AACA,IAAMA,KAAK,GAAG,CACV,EADU,CAAd;eAMeA,K","sourcesContent":["/* eslint-disable node/no-unsupported-features/es-syntax */\r\nconst users = [\r\n    {\r\n       \r\n    }\r\n]\r\n\r\nexport default users;\r\n"],"file":"users.js"}
