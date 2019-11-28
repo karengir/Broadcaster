@@ -1,35 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>SignUp</title>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
-	<link href="https://fonts.googleapis.com/css?family=Lora&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Crete+Round&display=swap" rel="stylesheet">
-</head>
-<body>
-  <nav>
-    <div class="logo">
-      <h4><a href="index.html">Broadcaster</a></h4>
+  <head>
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Crete+Round&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <h4><a href="index.html">Broadcaster</a></h4>
+      </div>
+      <ul class="components">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="LogIn.html">LogIn</a></li>
+      </ul>
+    </nav>
+    <div class="sign-form">
+      <form action="LogIn.html" method="" class="logform">
+        <h1>Sign Up</h1>
+        <input
+          type="text"
+          id="inputOther"
+          placeholder="Firstname"
+          required
+        /><br />
+        <input
+          type="text"
+          id="inputOther"
+          placeholder="Lastname"
+          required
+        /><br />
+        <input
+          type="email"
+          id="inputOther"
+          placeholder="Email"
+          required
+        /><br />
+        <input
+          type="text"
+          id="inputOther"
+          placeholder="PhoneNumber"
+          required
+        /><br />
+        <input
+          type="text"
+          id="inputOther"
+          placeholder="Username"
+          required
+        /><br />
+        <button class="button">Create account</button><br />
+        <a href="LogIn.html" class="anchor">Already have an account? Log In!</a>
+      </form>
     </div>
-    <ul class="components">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="LogIn.html">LogIn</a></li>
-    </ul>
-  </nav>
-<div class="sign-form">
-	<form action="LogIn.html" method="">
-		<h1>Sign Up</h1>
-		<input type="text" class="txtUp" placeholder="Firstname" required><br>
-		<input type="text" class="txtUp" placeholder="Lastname" required><br>
-		<input type="email" class="txtUp" placeholder="Email" required><br>
-		<input type="text" class="txtUp" placeholder="PhoneNumber" required><br>
-		<input type="text" class="txtUp" placeholder="Username" required><br>
-		<button  class="button"> Create account </button><br>
-		<a href="LogIn.html" class="anchor">Already have an account? Log In!</a>
-	</form>
-</div>
-<div class="footer">
-		<p>Copyrights</p>
-	  </div>
-</body>
+    <div class="footer">
+      <p>Copyrights</p>
+    </div>
+  </body>
 </html>
