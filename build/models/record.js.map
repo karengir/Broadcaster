@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../server/models/record.js"],"names":["records"],"mappings":";;;;;;;AAAA;AACA,IAAMA,OAAO,GAAG,EAAhB;eAIeA,O","sourcesContent":["/* eslint-disable node/no-unsupported-features/es-syntax */\r\nconst records = [\r\n    \r\n]\r\n\r\nexport default records;"],"file":"record.js"}
