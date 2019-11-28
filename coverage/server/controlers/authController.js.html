@@ -114,11 +114,7 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -126,7 +122,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,84 +181,82 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable no-else-return */
-/* eslint-disable consistent-return */
-/* eslint-disable node/no-unsupported-features/es-syntax */
-import bcrypt from 'bcryptjs';
-import users from '../models/users';
-import MakeToken from '../helper/tokenGen';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import bcrypt from "bcryptjs";
+import users from "../models/users";
+import MakeToken from "../helper/tokenGen";
+import { passwordhash, passwordVerify } from "../helper/passwordHash";
 &nbsp;
 class authController {
+  static signup(req, res) {
+    // const salt = bcrypt.genSaltSync(10);
+    // const passwordEncr = bcrypt.hashSync(req.body.password, salt);
+    const passwordEncry = passwordhash(req.body.password);
+    const user = {
+      id: users.length + 1,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      username: req.body.username,
+      password: passwordEncry
+    };
 &nbsp;
-    static signup(req, res) {
-        const salt = bcrypt.genSaltSync(10);
-        const passwordEncr = bcrypt.hashSync(req.body.password, salt);
-        const user = {
-            id: users.length + 1,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            phoneNumber: req.body.phoneNumber,
-            username: req.body.username,
-            password: passwordEncr
-        };
-&nbsp;
-        const found = users.find(u =&gt; u.email === user.email);
-        if (!found) {
-            users.push(user)
-            res.status(201).json({
-                status: 201,
-                message: 'User successfully created',
-                data: user,
-                token: MakeToken(user.email, user.id)
-            })
-        } else{
-            return res.status(409).json({
-                status: 409,
-                message: 'user already exists'
-            })
-        }
+    const found = users.find(u =&gt; u.email === user.email);
+    if (!found) {
+      users.push(user);
+      res.status(201).json({
+        status: 201,
+        message: "User successfully created",
+        data: user,
+        token: MakeToken(user.email, user.id)
+      });
+    } else {
+      return res.status(409).json({
+        status: 409,
+        message: "user already exists"
+      });
     }
-    
-    static signin(req, res){
-        const user = {
-            email: req.body.email,
-            password: req.body.password
-        };
+  }
 &nbsp;
-        const found = users.find(u =&gt; u.email === user.email);
-        if(found) {
-            const compare =  bcrypt.compareSync(user.password,found.password)
-            if(compare) {
-                const tokn = MakeToken(user.email,user.id);
-                return res.status(200).json({
-                    status:200,
-                    token:tokn,
-                    message:'User successfully logged in'
-                })
-            } else {
-                return res.status(401).json({
-                    status:401,
-                    error: 'Password is incorrect'
-                })
-            }
-        } 
-        return res.status(404).json({
-            status:404,
-            error: 'Email does not exist'
+  static signin(req, res) {
+    const user = {
+      email: req.body.email,
+      password: req.body.password
+    };
+&nbsp;
+    const found = users.find(u =&gt; u.email === user.email);
+    if (found) {
+      const compare = passwordVerify(user.password, found.password);
+      if (compare) {
+        const tokn = MakeToken(user.email, user.id);
+        return res.status(200).json({
+          status: 200,
+          token: tokn,
+          message: "User successfully logged in"
         });
-&nbsp;
+      } else {
+        return res.status(401).json({
+          status: 401,
+          error: "Password or email is incorrect"
+        });
+      }
     }
+    return res.status(404).json({
+      status: 404,
+      error: "Password or email is incorrect"
+    });
+  }
 }
 &nbsp;
-export default authController;</pre></td></tr>
+export default authController;
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 27 2019 20:23:26 GMT+0200 (Central Africa Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 28 2019 13:36:46 GMT+0200 (Central Africa Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
