@@ -96,14 +96,46 @@ class recordController {
       }
       return res.status(400).json({
         status: 400,
-        message: "cannot edit article you did not create"
+        message: "you cannot edit a record that you did not create"
       });
     }
     return res.status(404).json({
       status: 404,
-      message: "Article not found"
+      message: "Record not found"
     });
   }
+
+  static updateRedflagcomment (req,res){
+        
+    const id = parseInt(req.params.redflagid,10);
+    const flag = records.find(rec=> rec.id == id);
+
+
+    if (flag) {
+        if(flag.createdBy == req.user.id){
+          const i = records.findIndex(el => el.id === flag.id);
+          records[i].comment = req.body.comment;
+            return res.status(200).json({
+                status: 200,
+                data: {
+                    id: flag.id,
+                    message: 'Updated red-flag record’s comment'
+                }
+            });
+        } 
+            return res.status(400).json({
+                status: 400,
+                message: 'you cannot edit a record that you did not create'
+                
+            });
+           
+        } 
+            return res.status(404).json({
+                status: 404,
+                message: 'Record not found not found'
+        })
+}
+
 }
 
 export default recordController;

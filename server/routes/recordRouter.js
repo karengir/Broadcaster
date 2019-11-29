@@ -10,6 +10,10 @@ router.delete("/:redflagid", tokenVerify, recordController.deleteRedflags);
 
 router.post(
   "/",
+  (req, res, next) => {
+    console.log(req.body);
+    return next();
+  },
   upload.single("image"),
   createRecord,
   tokenVerify,
@@ -22,6 +26,12 @@ router.patch(
   "/:redflagid/location",
   tokenVerify,
   recordController.updateRedflaglocation
+);
+
+router.patch(
+  "/:redflagid/comment",
+  tokenVerify,
+  recordController.updateRedflagcomment
 );
 
 router.get("/:redflagid", recordController.getSingleRedflag);
