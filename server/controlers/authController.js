@@ -24,7 +24,10 @@ class authController {
       res.status(201).json({
         status: 201,
         message: "User successfully created",
-        data: user,
+        data:  Object.defineProperty(user, "password", {
+          enumerable: false,
+          writable: true
+      }),
         token: MakeToken(user.email, user.id)
       });
     } else {
