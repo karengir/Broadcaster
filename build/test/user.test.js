@@ -184,7 +184,7 @@ describe(" record tests", function () {
       location: "dsfasdfa"
     }).end(function (err, res) {
       res.should.have.status(400);
-      res.body.should.have.property("message", "cannot edit article you did not create");
+      res.body.should.have.property("message", "you cannot edit a record that you did not create");
       res.body.should.be.an("object");
       done();
     });
@@ -194,7 +194,17 @@ describe(" record tests", function () {
       location: "dsfasdfa"
     }).end(function (err, res) {
       res.should.have.status(404);
-      res.body.should.have.property("message", "Article not found");
+      res.body.should.have.property("message", "Record not found");
+      res.body.should.be.an("object");
+      done();
+    });
+  });
+  it("user should be able to edit the comment of a record they created", function (done) {
+    _chai["default"].request(_app["default"]).patch("/api/v1/red-flags/1/comment").set("token", tok).send({
+      comment: "it has been long"
+    }).end(function (err, res) {
+      res.should.have.status(200);
+      res.body.data.should.have.property("message", "Updated red-flag record’s comment");
       res.body.should.be.an("object");
       done();
     });
@@ -224,4 +234,3 @@ describe(" record tests", function () {
     });
   });
 });
-//# sourceMappingURL=user.test.js.map

@@ -22,4 +22,3 @@ var MakeToken = function MakeToken(email, id) {
 
 var _default = MakeToken;
 exports["default"] = _default;
-//# sourceMappingURL=tokenGen.js.map

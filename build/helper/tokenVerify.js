@@ -31,4 +31,3 @@ var tokenVerify = function tokenVerify(req, res, next) {
 
 var _default = tokenVerify;
 exports["default"] = _default;
-//# sourceMappingURL=tokenVerify.js.map

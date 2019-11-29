@@ -12,6 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var storage = _multer["default"].diskStorage({
   destination: function destination(req, file, cb) {
     cb(null, "server/uploads/");
+    console.log(req.file);
   },
   filename: function filename(req, file, cb) {
     cb(null, file.originalname);
@@ -32,4 +33,3 @@ var upload = (0, _multer["default"])({
 });
 var _default = upload;
 exports["default"] = _default;
-//# sourceMappingURL=filefolder.js.map

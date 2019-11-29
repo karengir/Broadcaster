@@ -20,4 +20,3 @@ router.post("/signup", _validation.signUp, _authController["default"].signup);
 router.post("/signin", _validation.signIn, _authController["default"].signin);
 var _default = router;
 exports["default"] = _default;
-//# sourceMappingURL=authRouter.js.map
