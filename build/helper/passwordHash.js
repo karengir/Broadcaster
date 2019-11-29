@@ -20,4 +20,3 @@ var passwordVerify = function passwordVerify(userPassword, foundPassword) {
 };
 
 exports.passwordVerify = passwordVerify;
-//# sourceMappingURL=passwordHash.js.map

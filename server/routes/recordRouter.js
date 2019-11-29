@@ -8,17 +8,7 @@ const router = Router();
 
 router.delete("/:redflagid", tokenVerify, recordController.deleteRedflags);
 
-router.post(
-  "/",
-  (req, res, next) => {
-    console.log(req.body);
-    return next();
-  },
-  upload.single("image"),
-  createRecord,
-  tokenVerify,
-  recordController.AddRecord
-);
+router.post("/", createRecord, tokenVerify, recordController.AddRecord);
 
 router.get("/red-flags", recordController.allRedflags);
 

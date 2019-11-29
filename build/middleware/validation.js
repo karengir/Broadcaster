@@ -75,4 +75,3 @@ var createRecord = function createRecord(req, res, next) {
 };
 
 exports.createRecord = createRecord;
-//# sourceMappingURL=validation.js.map

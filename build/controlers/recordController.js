@@ -143,13 +143,49 @@ function () {
 
         return res.status(400).json({
           status: 400,
-          message: "cannot edit article you did not create"
+          message: "you cannot edit a record that you did not create"
         });
       }
 
       return res.status(404).json({
         status: 404,
-        message: "Article not found"
+        message: "Record not found"
+      });
+    }
+  }, {
+    key: "updateRedflagcomment",
+    value: function updateRedflagcomment(req, res) {
+      var id = parseInt(req.params.redflagid, 10);
+
+      var flag = _record["default"].find(function (rec) {
+        return rec.id == id;
+      });
+
+      if (flag) {
+        if (flag.createdBy == req.user.id) {
+          var i = _record["default"].findIndex(function (el) {
+            return el.id === flag.id;
+          });
+
+          _record["default"][i].comment = req.body.comment;
+          return res.status(200).json({
+            status: 200,
+            data: {
+              id: flag.id,
+              message: 'Updated red-flag record’s comment'
+            }
+          });
+        }
+
+        return res.status(400).json({
+          status: 400,
+          message: 'you cannot edit a record that you did not create'
+        });
+      }
+
+      return res.status(404).json({
+        status: 404,
+        message: 'Record not found not found'
       });
     }
   }]);
@@ -159,4 +195,3 @@ function () {
 
 var _default = recordController;
 exports["default"] = _default;
-//# sourceMappingURL=recordController.js.map
