@@ -19,10 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var router = (0, _express["default"])();
 router["delete"]("/:redflagid", _tokenVerify["default"], _recordController["default"].deleteRedflags);
-router.post("/", function (req, res, next) {
-  console.log(req.body);
-  return next();
-}, _filefolder["default"].single("image"), _validation.createRecord, _tokenVerify["default"], _recordController["default"].AddRecord);
+router.post("/", _tokenVerify["default"], _validation.createRecord, _recordController["default"].AddRecord);
 router.get("/red-flags", _recordController["default"].allRedflags);
 router.patch("/:redflagid/location", _tokenVerify["default"], _recordController["default"].updateRedflaglocation);
 router.patch("/:redflagid/comment", _tokenVerify["default"], _recordController["default"].updateRedflagcomment);

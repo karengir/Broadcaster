@@ -12,7 +12,7 @@ class recordController {
       type: req.body.type,
       comment: req.body.comment,
       location: req.body.location,
-      status: req.body.status
+      status: "pending"
       // images : req.image.images,
       // videos : req.body.videos,
     };
@@ -29,14 +29,15 @@ class recordController {
   }
 
   static allRedflags(req, res) {
+    const recs = records.filter(record => record.createdBy == req.user.id);
     res.status(200).json({
       status: 200,
-      data: records
+      data: recs
     });
   }
 
   static getSingleRedflag(req, res) {
-    const id = parseInt(req.params.redflagid);
+    const id = parseInt("1");
     const flag = records.find(rec => rec.id === id);
 
     if (flag) {
@@ -67,7 +68,7 @@ class recordController {
         });
       }
       return res.status(400).json({
-        status: 400,
+        status: 401,
         error: "cannot delete record you did not create"
       });
     }
@@ -95,7 +96,7 @@ class recordController {
         });
       }
       return res.status(400).json({
-        status: 400,
+        status: 401,
         message: "you cannot edit a record that you did not create"
       });
     }
@@ -105,37 +106,32 @@ class recordController {
     });
   }
 
-  static updateRedflagcomment (req,res){
-        
-    const id = parseInt(req.params.redflagid,10);
-    const flag = records.find(rec=> rec.id == id);
-
+  static updateRedflagcomment(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = records.find(rec => rec.id == id);
 
     if (flag) {
-        if(flag.createdBy == req.user.id){
-          const i = records.findIndex(el => el.id === flag.id);
-          records[i].comment = req.body.comment;
-            return res.status(200).json({
-                status: 200,
-                data: {
-                    id: flag.id,
-                    message: 'Updated red-flag record’s comment'
-                }
-            });
-        } 
-            return res.status(400).json({
-                status: 400,
-                message: 'you cannot edit a record that you did not create'
-                
-            });
-           
-        } 
-            return res.status(404).json({
-                status: 404,
-                message: 'Record not found not found'
-        })
-}
-
+      if (flag.createdBy == req.user.id) {
+        const i = records.findIndex(el => el.id === flag.id);
+        records[i].comment = req.body.comment;
+        return res.status(200).json({
+          status: 200,
+          data: {
+            id: flag.id,
+            message: "Updated red-flag record’s comment"
+          }
+        });
+      }
+      return res.status(400).json({
+        status: 401,
+        message: "you cannot edit a record that you did not create"
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: "Record not found not found"
+    });
+  }
 }
 
 export default recordController;

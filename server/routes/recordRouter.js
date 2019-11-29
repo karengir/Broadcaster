@@ -8,9 +8,9 @@ const router = Router();
 
 router.delete("/:redflagid", tokenVerify, recordController.deleteRedflags);
 
-router.post("/", createRecord, tokenVerify, recordController.AddRecord);
+router.post("/", tokenVerify, createRecord, recordController.AddRecord);
 
-router.get("/red-flags", recordController.allRedflags);
+router.get("/red-flags", tokenVerify, recordController.allRedflags);
 
 router.patch(
   "/:redflagid/location",
