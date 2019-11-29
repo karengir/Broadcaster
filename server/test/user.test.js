@@ -113,7 +113,10 @@ describe("sign in tests", () => {
       })
       .end((err, res) => {
         res.should.have.status(401);
-        res.body.should.have.property("error", "Password or email is incorrect");
+        res.body.should.have.property(
+          "error",
+          "Password or email is incorrect"
+        );
         res.body.should.be.an("object");
         done();
       });
@@ -144,7 +147,10 @@ describe("sign in tests", () => {
       })
       .end((err, res) => {
         res.should.have.status(404);
-        res.body.should.have.property("error", "Password or email is incorrect");
+        res.body.should.have.property(
+          "error",
+          "Password or email is incorrect"
+        );
         res.body.should.be.an("object");
         done();
       });
@@ -261,7 +267,7 @@ describe(" record tests", () => {
         res.should.have.status(400);
         res.body.should.have.property(
           "message",
-          "cannot edit article you did not create"
+          "you cannot edit a record that you did not create"
         );
         res.body.should.be.an("object");
         done();
@@ -276,7 +282,24 @@ describe(" record tests", () => {
       .send({ location: "dsfasdfa" })
       .end((err, res) => {
         res.should.have.status(404);
-        res.body.should.have.property("message", "Article not found");
+        res.body.should.have.property("message", "Record not found");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should be able to edit the comment of a record they created", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/1/comment")
+      .set("token", tok)
+      .send({ comment: "it has been long" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.data.should.have.property(
+          "message",
+          "Updated red-flag record’s comment"
+        );
         res.body.should.be.an("object");
         done();
       });
