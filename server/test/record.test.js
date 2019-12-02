@@ -7,8 +7,9 @@ import MakeToken from "../helper/tokenGen";
 chai.use(chaiHttp);
 chai.should();
 
-const tok = MakeToken("kgiramata%7@gmail.com", "1");
-const tok2 = MakeToken("kgiramata57@gmail.com", "1");
+const tok = MakeToken("kgiramata%7@gmail.com", "1", "citizen");
+const tok2 = MakeToken("kgiramata57@gmail.com", "citizen");
+const tok1 = MakeToken("jpaul@gmail.com", "2", "admin");
 
 const redflag = {
   title: "robbery",
@@ -153,6 +154,78 @@ describe(" record tests", () => {
           "message",
           "Updated red-flag record’s comment"
         );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit the comment of a record they did not create", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/1/comment")
+      .set("token", tok2)
+      .send({ comment: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit the comment of a record that does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/2/comment")
+      .set("token", tok)
+      .send({ comment: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property("message", "Record not found");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("Admin should be able to edit the status of a given record", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/1/status")
+      .set("token", tok1)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.data.should.have.property(
+          "message",
+          "Updated red-flag record’s status"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("Admin should not be able to edit the status of any given record if email does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/1/status")
+      .set("token", tok2)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property("error", "Not authorized");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("a user should not be able to edit the status of any given record", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/red-flags/1/status")
+      .set("token", tok)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property("error", "Not authorized");
         res.body.should.be.an("object");
         done();
       });

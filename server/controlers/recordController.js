@@ -18,7 +18,7 @@ class recordController {
     };
 
     records.push(record);
-    res.status(201).json({
+    return res.status(201).json({
       status: 201,
       message: "record created successfully",
       data: {
@@ -41,7 +41,7 @@ class recordController {
     const flag = records.find(rec => rec.id === id);
 
     if (flag) {
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: flag
       });
@@ -129,7 +129,27 @@ class recordController {
     }
     return res.status(404).json({
       status: 404,
-      message: "Record not found not found"
+      message: "Record not found"
+    });
+  }
+
+  static updateRedflagstatus(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = records.find(rec => rec.id == id);
+
+    if (flag) {
+      flag.status = req.body.status;
+      return res.status(200).json({
+        status: 200,
+        data: {
+          id: flag.id,
+          message: "Updated red-flag record’s status"
+        }
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: "record not found"
     });
   }
 }

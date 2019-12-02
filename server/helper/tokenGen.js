@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const MakeToken = (email, id) => jwt.sign({ email, id }, process.env.SECRET);
+const MakeToken = (email, id, role) =>
+  jwt.sign({ email, id, role }, process.env.SECRET);
 
 export default MakeToken;
