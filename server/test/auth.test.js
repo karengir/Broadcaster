@@ -7,9 +7,6 @@ import MakeToken from "../helper/tokenGen";
 chai.use(chaiHttp);
 chai.should();
 
-// const tok = MakeToken("kgiramata%7@gmail.com");
-// const tok2 = MakeToken("kgiramata57@gmail.com", "1");
-
 const user = {
   firstname: "Giramata",
   lastname: "Karen",
@@ -24,21 +21,10 @@ const logUser = {
   password: "1234567"
 };
 
-// const redflag = {
-//   title: "robbery",
-//   type: "red-flag",
-//   comment: "Urgent",
-//   location: "KG 30 ST 5",
-//   status: "yet to be resolved"
-// };
-
-// const redflag2 = {
-//   title: "",
-//   type: "red-flag",
-//   comment: "Urgent",
-//   location: "KG 30 ST 5",
-//   status: "yet to be resolved"
-// };
+const logUser2 = {
+  email: "jpaul@gmail.com",
+  password: "12334"
+};
 
 describe("sign Up tests", () => {
   it("user should be able to create an account", done => {
@@ -95,6 +81,19 @@ describe("sign in tests", () => {
       .request(app)
       .post("/api/v1/auth/signin")
       .send(logUser)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property("message", "User successfully logged in");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("Admin should be able to log into their account", done => {
+    chai
+      .request(app)
+      .post("/api/v1/auth/signin")
+      .send(logUser2)
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.have.property("message", "User successfully logged in");

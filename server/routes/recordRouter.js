@@ -3,6 +3,7 @@ import upload from "../middleware/filefolder";
 import recordController from "../controlers/recordController";
 import tokenVerify from "../helper/tokenVerify";
 import { createRecord } from "../middleware/validation";
+import tokenVerifyAdmin from "../helper/tokenVerifyAdmin";
 
 const router = Router();
 
@@ -25,5 +26,11 @@ router.patch(
 );
 
 router.get("/:redflagid", recordController.getSingleRedflag);
+
+router.patch(
+  "/:redflagid/status",
+  tokenVerifyAdmin,
+  recordController.updateRedflagstatus
+);
 
 export default router;

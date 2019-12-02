@@ -114,20 +114,16 @@
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,25 +153,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,8 +189,6 @@ import { passwordhash, passwordVerify } from "../helper/passwordHash";
 &nbsp;
 class authController {
   static signup(req, res) {
-    // const salt = bcrypt.genSaltSync(10);
-    // const passwordEncr = bcrypt.hashSync(req.body.password, salt);
     const passwordEncry = passwordhash(req.body.password);
     const user = {
       id: users.length + 1,
@@ -205,27 +197,27 @@ class authController {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       username: req.body.username,
-      password: passwordEncry
+      password: passwordEncry,
+      role: "citizen"
     };
 &nbsp;
     const found = users.find(u =&gt; u.email === user.email);
     if (!found) {
       users.push(user);
-      res.status(201).json({
+      return res.status(201).json({
         status: 201,
         message: "User successfully created",
-        data:  Object.defineProperty(user, "password", {
+        data: Object.defineProperty(user, "password", {
           enumerable: false,
           writable: true
-      }),
-        token: MakeToken(user.email, user.id)
-      });
-    } else {
-      return res.status(409).json({
-        status: 409,
-        message: "user already exists"
+        }),
+        token: MakeToken(user.email, user.id, user.role)
       });
     }
+    return res.status(409).json({
+      status: 409,
+      message: "user already exists"
+    });
   }
 &nbsp;
   static signin(req, res) {
@@ -238,18 +230,17 @@ class authController {
     if (found) {
       const compare = passwordVerify(user.password, found.password);
       if (compare) {
-        const tokn = MakeToken(user.email, user.id);
+        const tokn = MakeToken(user.email, user.id, found.role);
         return res.status(200).json({
           status: 200,
           token: tokn,
           message: "User successfully logged in"
         });
-      } else {
-        return res.status(401).json({
-          status: 401,
-          error: "Password or email is incorrect"
-        });
       }
+      return res.status(401).json({
+        status: 401,
+        error: "Password or email is incorrect"
+      });
     }
     return res.status(404).json({
       status: 404,
@@ -265,7 +256,7 @@ export default authController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 29 2019 19:14:10 GMT+0200 (Central Africa Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Dec 02 2019 15:02:18 GMT+0200 (Central Africa Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
