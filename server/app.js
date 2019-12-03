@@ -1,15 +1,8 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable comma-dangle */
-/* eslint-disable quotes */
-/* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-/* eslint-disable no-console */
-
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-import authRouter from "./routes/authRouter";
-import recordRouter from "./routes/recordRouter";
+import authRouter from ".v1/routes/authRouter";
+import recordRouter from ".v1/routes/recordRouter";
 
 dotenv.config();
 

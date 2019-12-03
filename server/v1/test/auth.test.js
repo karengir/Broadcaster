@@ -1,7 +1,7 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import users from "../models/users";
-import app from "../app";
+import app from "../../app";
 import MakeToken from "../helper/tokenGen";
 
 chai.use(chaiHttp);
