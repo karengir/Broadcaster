@@ -14,8 +14,8 @@ const createTables = async () => {
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    phoneNumber TEXT NOT NULL,
-    username TEXT NOT NULL,
+    phoneNumber TEXT NOT NULL UNIQUE,
+    username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role TEXT NOT NULL
   )`;
