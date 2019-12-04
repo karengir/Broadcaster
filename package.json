@@ -9,8 +9,8 @@
     "dev": "nodemon --exec babel-node ./server/app.js",
     "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v2/test/*.test.js ",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "drop": "babel-node Server/v2/db/dropTables.js",
-    "create": "babel-node Server/v2/db/createTables.js"
+    "drop": "babel-node server/v2/db/dropTables.js",
+    "create": "babel-node server/v2/db/createTables.js"
   },
   "repository": {
     "type": "git",
