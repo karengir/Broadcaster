@@ -1,7 +1,7 @@
 const queries = [
   {
     insertUser: `INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, role) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
-    findEmail: `SELECT * FROM users WHERE emai=$1`
+    findEmail: `SELECT * FROM users WHERE email=$1`
   },
 
   {
