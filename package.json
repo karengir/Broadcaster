@@ -7,10 +7,10 @@
     "start": "npm run build && node build/app.js",
     "build": "babel ./server -d build",
     "dev": "nodemon --exec babel-node ./server/app.js",
-    "test": "npm run drop && npm run create && nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 10000 --exit server/v2/test/*.test.js ",
+    "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v2/test/*.test.js ",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "drop": "babel-node Server/v2/db/dropTables.js",
-    "create": "babel-node Server/v2/db/createTables.js"
+    "drop": "babel-node server/v2/db/dropTables.js",
+    "create": "babel-node server/v2/db/createTables.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "@babel/cli": "^7.7.4",
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
+    "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
     "chai": "^4.2.0",
