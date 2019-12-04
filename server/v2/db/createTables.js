@@ -3,9 +3,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const connectString = process.env.DATABASE_URL;
-const pool = new Pool({
-  connectionString: connectString
+let pool;
+
+if (process.env.NODE_ENV === "TEST") {
+  pool = new Pool({ connectionString: process.env.TESTDATABASE_URL });
+} else {
+  pool = new Pool({ connectionString: process.env.DATABASE_URL });
+}
+pool.on("connect", () => {
+  console.log("connected");
 });
 
 const createTables = async () => {
@@ -34,11 +40,11 @@ const createTables = async () => {
   await pool.query(users);
   await pool.query(records);
 
-  const firstUser = `INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, role) VALUES ('karen','giramata','kgiramata57@gmail','08877','kargir','000mmm','citizen')`;
-  const firstRecord = `INSERT INTO records (title,type,comment,location,status,createdOn,createdBy) VALUES ('corruption','red-flag','mmm','kigali','kkk','19-02-1999','1')`;
+  const firstUser = `INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, role) VALUES ('john','paul','jpaul@gmail.com','088700','jayp','$2a$10$6W748staJTakfi7scmJcuedYMfMOpIqiDKYEEkxlzSJp7ewh4hGge','admin')`;
+  // const firstRecord = `INSERT INTO records (title,type,comment,location,status,createdOn,createdBy) VALUES ('corruption','red-flag','mmm','kigali','kkk','19-02-1999','1')`;
 
   await pool.query(firstUser);
-  await pool.query(firstRecord);
+  // await pool.query(firstRecord);
 };
 
 createTables();

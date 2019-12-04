@@ -7,9 +7,15 @@ dotenv.config();
 
 const dropTables = async () => {
   try {
-    const connectionstring = process.env.DATABASE_URL;
-    const pool = new Pool({
-      connectionString: connectionstring
+    let pool;
+
+    if (process.env.NODE_ENV === "TEST") {
+      pool = new Pool({ connectionString: process.env.TESTDATABASE_URL });
+    } else {
+      pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    }
+    pool.on("connect", () => {
+      console.log("connected");
     });
 
     await pool.query(queries[2].dropUser);
