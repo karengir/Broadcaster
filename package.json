@@ -6,11 +6,12 @@
   "scripts": {
     "start": "npm run build && node build/app.js",
     "build": "babel ./server -d build",
-    "dev": "nodemon --exec babel-node ./server/app.js",
-    "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v2/test/*.test.js ",
+    "dev": "npm run create_tables && npm run create_admin && nodemon --exec babel-node ./server/app.js",
+    "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create_tables && NODE_ENV=TEST npm run create_admin && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v2/test/*.test.js ",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "drop": "babel-node server/v2/db/dropTables.js",
-    "create": "babel-node server/v2/db/createTables.js"
+    "create_tables": "babel-node server/v2/db/createTables.js",
+    "create_admin": "babel-node server/v2/db/createAdmin.js"
   },
   "repository": {
     "type": "git",

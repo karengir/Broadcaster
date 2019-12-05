@@ -3,6 +3,9 @@ import { passwordhash, passwordVerify } from "../helper/passwordHash";
 import executeQuerry from "../db/connection";
 import queries from "../db/queries";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 class authController {
   static async signup(req, res) {
@@ -36,7 +39,7 @@ class authController {
           enumerable: false,
           writable: true
         }),
-        token: MakeToken(user.email, "1", user.role)
+        token: MakeToken(user.email, user.id, user.role)
       });
     }
     return res.status(409).json({
@@ -55,7 +58,10 @@ class authController {
     if (found.length === 1) {
       const compare = bcrypt.compareSync(user.password, found[0].password);
       if (compare) {
-        const tokn = MakeToken(user.email, user.id, found.role);
+        const tokn = MakeToken(user.email, user.id, found[0].role);
+        console.log(found[0].role);
+        const valid = jwt.verify(tokn, process.env.SECRET);
+        console.log(valid);
         return res.status(200).json({
           status: 200,
           token: tokn,

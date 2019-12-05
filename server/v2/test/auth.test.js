@@ -22,7 +22,7 @@ const logUser = {
 };
 
 const logUser2 = {
-  email: "jpaul@gmail.com",
+  email: "jpaull@gmail.com",
   password: "12334"
 };
 

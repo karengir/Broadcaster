@@ -33,18 +33,12 @@ const createTables = async () => {
     comment TEXT NOT NULL,
     location TEXT NOT NULL,
     status TEXT NOT NULL,
-    createdOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    createdOn TEXT NOT NULL,
     createdBy TEXT NOT NULL
   )`;
 
   await pool.query(users);
   await pool.query(records);
-
-  const firstUser = `INSERT INTO users (firstname, lastname, email, phoneNumber, username, password, role) VALUES ('john','paul','jpaul@gmail.com','088700','jayp','$2a$10$6W748staJTakfi7scmJcuedYMfMOpIqiDKYEEkxlzSJp7ewh4hGge','admin')`;
-  // const firstRecord = `INSERT INTO records (title,type,comment,location,status,createdOn,createdBy) VALUES ('corruption','red-flag','mmm','kigali','kkk','19-02-1999','1')`;
-
-  await pool.query(firstUser);
-  // await pool.query(firstRecord);
 };
 
 createTables();
