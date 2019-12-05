@@ -9,7 +9,8 @@ chai.should();
 
 const tok = MakeToken("kgiramata%7@gmail.com", "1", "citizen");
 const tok3 = MakeToken("kgiramata%7@gmail.com", "1", "admin");
-const tok2 = MakeToken("kgiramata57@gmail.com", "citizen");
+const tok2 = MakeToken("kgiramata57@gmail.com", "1", "citizen");
+const tok4 = MakeToken("kgiramata%7@gmail.com", "3", "citizen");
 const tok1 = MakeToken("jpaul@gmail.com", "2", "admin");
 
 const redflag = {
@@ -72,6 +73,23 @@ describe(" record tests", () => {
       });
   });
 
+  it("user should not be able to create a record when email does not exist", done => {
+    chai
+      .request(app)
+      .post("/api/v2/red-flags/")
+      .set("token", tok2)
+      .send(redflag)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property(
+          "error",
+          "Not authorized, email does not exist"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
   it("user should be able to view all red-flags", done => {
     chai
       .request(app)
@@ -106,6 +124,51 @@ describe(" record tests", () => {
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property("message", "Record not found");
+        done();
+      });
+  });
+
+  it("user should be able to edit the location of a record they created", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/location")
+      .set("token", tok)
+      .send({ location: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property(
+          "message",
+          "Updated red-flag record’s location"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it.skip("user should not be able to edit the location of a record they did not create", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/location")
+      .set("token", tok4)
+      .send({ location: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property("message", "Not authorized as admin");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit the location of a record that does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/2/location")
+      .set("token", tok)
+      .send({ location: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property("message", "Record not found");
+        res.body.should.be.an("object");
         done();
       });
   });

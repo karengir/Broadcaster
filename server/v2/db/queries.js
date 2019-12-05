@@ -11,7 +11,7 @@ const queries = [
     getRecord: `SELECT * FROM records WHERE id=$1 `,
     getAllRecords: `SELECT * FROM records`,
     editRecordComment: `UPDATE records SET comment=$1 WHERE id=$2 RETURNING *`,
-    editRecordComment: `UPDATE records SET location=$1 WHERE id=$2 RETURNING *`
+    editRecordLocation: `UPDATE records SET location=$1 WHERE id=$2 RETURNING *`
   },
 
   {

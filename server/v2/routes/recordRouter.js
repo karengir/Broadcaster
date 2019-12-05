@@ -13,11 +13,11 @@ router.post("/", tokenVerify, createRecord, recordController.AddRecord);
 
 router.get("/red-flags", tokenVerify, recordController.allRedflags);
 
-// router.patch(
-//   "/:redflagid/location",
-//   tokenVerify,
-//   recordController.updateRedflaglocation
-// );
+router.patch(
+  "/:redflagid/location",
+  tokenVerify,
+  recordController.updateRedflaglocation
+);
 
 // router.patch(
 //   "/:redflagid/comment",
