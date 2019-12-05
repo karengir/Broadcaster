@@ -25,7 +25,7 @@ router.get("/red-flags", tokenVerify, recordController.allRedflags);
 //   recordController.updateRedflagcomment
 // );
 
-// router.get("/:redflagid", recordController.getSingleRedflag);
+router.get("/:redflagid", recordController.getSingleRedflag);
 
 // router.patch(
 //   "/:redflagid/status",

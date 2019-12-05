@@ -43,6 +43,21 @@ class recordController {
       data: recs
     });
   }
+
+  static async getSingleRedflag(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = await executeQuerry(queries[1].getRecord, [id]);
+    if (flag.length === 1) {
+      return res.status(200).json({
+        status: 200,
+        data: flag
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: "Record not found"
+    });
+  }
 }
 
 export default recordController;

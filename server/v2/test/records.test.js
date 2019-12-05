@@ -84,4 +84,29 @@ describe(" record tests", () => {
         done();
       });
   });
+
+  it("user should be able to view one specific red-flag", done => {
+    chai
+      .request(app)
+      .get("/api/v2/red-flags/1")
+      .set("token", tok)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to view a specific red-flag if id does not exist", done => {
+    chai
+      .request(app)
+      .get("/api/v1/red-flags/22")
+      .send()
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property("message", "Record not found");
+        done();
+      });
+  });
 });
