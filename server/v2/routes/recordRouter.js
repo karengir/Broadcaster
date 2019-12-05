@@ -19,11 +19,11 @@ router.patch(
   recordController.updateRedflaglocation
 );
 
-// router.patch(
-//   "/:redflagid/comment",
-//   tokenVerify,
-//   recordController.updateRedflagcomment
-// );
+router.patch(
+  "/:redflagid/comment",
+  tokenVerify,
+  recordController.updateRedflagcomment
+);
 
 router.get("/:redflagid", recordController.getSingleRedflag);
 
