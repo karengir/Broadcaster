@@ -35,6 +35,14 @@ class recordController {
       });
     }
   }
+
+  static async allRedflags(req, res) {
+    const recs = await executeQuerry(queries[1].getAllRecords);
+    res.status(200).json({
+      status: 200,
+      data: recs
+    });
+  }
 }
 
 export default recordController;

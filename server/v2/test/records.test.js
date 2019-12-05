@@ -56,36 +56,32 @@ describe(" record tests", () => {
         res.body.should.be.an("object");
         done();
       });
+  });
 
-    it("user should not be able to create a record when email does not exist", done => {
-      chai
-        .request(app)
-        .post("/api/v2/red-flags/")
-        .set("token", tok2)
-        .send(redflag)
-        .end((err, res) => {
-          res.should.have.status(401);
-          res.body.should.have.property(
-            "error",
-            "Not authorized, email does not exist"
-          );
-          res.body.should.be.an("object");
-          done();
-        });
-    });
+  it("user should not be able to create a record when role is admin", done => {
+    chai
+      .request(app)
+      .post("/api/v2/red-flags/")
+      .set("token", tok3)
+      .send(redflag)
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property("error", "Not authorized as admin");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
 
-    it("user should not be able to create a record when role is admi", done => {
-      chai
-        .request(app)
-        .post("/api/v2/red-flags/")
-        .set("token", tok3)
-        .send(redflag)
-        .end((err, res) => {
-          res.should.have.status(401);
-          res.body.should.have.property("error", "Not authorized as admin");
-          res.body.should.be.an("object");
-          done();
-        });
-    });
+  it("user should be able to view all red-flags", done => {
+    chai
+      .request(app)
+      .get("/api/v2/red-flags/red-flags")
+      .set("token", tok)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.an("object");
+        done();
+      });
   });
 });

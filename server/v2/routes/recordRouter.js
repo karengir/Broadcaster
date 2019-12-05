@@ -11,7 +11,7 @@ const router = Router();
 
 router.post("/", tokenVerify, createRecord, recordController.AddRecord);
 
-// router.get("/red-flags", tokenVerify, recordController.allRedflags);
+router.get("/red-flags", tokenVerify, recordController.allRedflags);
 
 // router.patch(
 //   "/:redflagid/location",
