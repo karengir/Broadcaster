@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import authRouter from "./v1/routes/authRouter";
 import recordRouter from "./v1/routes/recordRouter";
 import authRouter2 from "./v2/routes/authRouter";
-import recordRouter2 from "./v1/routes/recordRouter";
+import recordRouter2 from "./v2/routes/recordRouter";
 
 dotenv.config();
 

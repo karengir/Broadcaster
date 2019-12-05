@@ -75,10 +75,6 @@ const createRecord = (req, res, next) => {
       .strict()
       .trim()
       .required(),
-    status: Joi.string()
-      .strict()
-      .trim()
-      .required(),
     comment: Joi.string()
       .strict()
       .trim()
