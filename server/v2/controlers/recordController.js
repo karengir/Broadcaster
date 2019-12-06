@@ -90,6 +90,38 @@ class recordController {
       message: "Record not found"
     });
   }
+
+  static async updateRedflagcomment(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = await executeQuerry(queries[1].getRecord, [id]);
+    const userId = req.userId;
+
+    if (flag.length === 1) {
+      if (flag[0].createdby == userId) {
+        const { comment } = req.body;
+        const flag2 = await executeQuerry(queries[1].editRecordComment, [
+          comment,
+          id
+        ]);
+        return res.status(200).json({
+          status: 200,
+          message: "Updated red-flag record’s comment",
+          data: {
+            id: flag2[0].id,
+            location: flag2[0].comment
+          }
+        });
+      }
+      return res.status(400).json({
+        status: 401,
+        message: "you cannot edit a record that you did not create"
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: "Record not found"
+    });
+  }
 }
 
 export default recordController;

@@ -172,4 +172,48 @@ describe(" record tests", () => {
         done();
       });
   });
+
+  it("user should be able to edit the comment of a record they created", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/comment")
+      .set("token", tok)
+      .send({ comment: "it has been long" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property(
+          "message",
+          "Updated red-flag record’s comment"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit the comment of a record they did not create", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/comment")
+      .set("token", tok2)
+      .send({ comment: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit the comment of a record that does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/2/comment")
+      .set("token", tok)
+      .send({ comment: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property("message", "Record not found");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
 });
