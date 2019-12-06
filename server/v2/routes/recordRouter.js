@@ -7,7 +7,7 @@ import tokenVerifyAdmin from "../helper/tokenVerifyAdmin";
 
 const router = Router();
 
-// router.delete("/:redflagid", tokenVerify, recordController.deleteRedflags);
+router.delete("/:redflagid", tokenVerify, recordController.deleteRedflags);
 
 router.post("/", tokenVerify, createRecord, recordController.AddRecord);
 

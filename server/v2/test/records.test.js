@@ -268,4 +268,49 @@ describe(" record tests", () => {
         done();
       });
   });
+
+  it("user should not be able to delete a record that does not exist", done => {
+    chai
+      .request(app)
+      .delete("/api/v2/red-flags/2")
+      .set("token", tok)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(404);
+        res.body.should.have.property("error", "No record found");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to delete a record they did not create", done => {
+    chai
+      .request(app)
+      .delete("/api/v2/red-flags/1")
+      .set("token", tok2)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property("error", "Not authorized, email does not exist");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should be able to delete a record they created", done => {
+    chai
+      .request(app)
+      .delete("/api/v2/red-flags/1")
+      .set("token", tok)
+      .send()
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property(
+          "message",
+          "red-flag record has been deleted"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
 });

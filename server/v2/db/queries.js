@@ -7,7 +7,7 @@ const queries = [
   {
     createRecord: `INSERT INTO records (title,type,comment,location,status,createdOn,createdBy) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
     findRecord: `SELECT * FROM records WHERE title=$1 and location=$2`,
-    deleteRecord: `DELETE * FROM records WHERE id=$1`,
+    deleteRecord: `DELETE FROM records WHERE id=$1`,
     getRecord: `SELECT * FROM records WHERE id=$1 `,
     getAllRecords: `SELECT * FROM records`,
     editRecordComment: `UPDATE records SET comment=$1 WHERE id=$2 RETURNING *`,
