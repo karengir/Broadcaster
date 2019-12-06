@@ -27,10 +27,10 @@ router.patch(
 
 router.get("/:redflagid", recordController.getSingleRedflag);
 
-// router.patch(
-//   "/:redflagid/status",
-//   tokenVerifyAdmin,
-//   recordController.updateRedflagstatus
-// );
+router.patch(
+  "/:redflagid/status",
+  tokenVerifyAdmin,
+  recordController.updateRedflagstatus
+);
 
 export default router;

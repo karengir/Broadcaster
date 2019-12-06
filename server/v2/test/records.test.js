@@ -7,11 +7,12 @@ import MakeToken from "../helper/tokenGen";
 chai.use(chaiHttp);
 chai.should();
 
-const tok = MakeToken("kgiramata%7@gmail.com", "1", "citizen");
-const tok3 = MakeToken("kgiramata%7@gmail.com", "1", "admin");
+const tok = MakeToken("kgiramata%7@gmail.com", "2", "citizen");
+const tok3 = MakeToken("kgiramata%7@gmail.com", "2", "admin");
 const tok2 = MakeToken("kgiramata57@gmail.com", "1", "citizen");
-const tok4 = MakeToken("kgiramata%7@gmail.com", "3", "citizen");
-const tok1 = MakeToken("jpaul@gmail.com", "2", "admin");
+const tok4 = MakeToken("kgiramata%7@gmail", "3", "citizen");
+const tok1 = MakeToken("jpaull@gmail.com", "1", "admin");
+const tok5 = MakeToken("jpaul@gmail.com", "1", "admin");
 
 const redflag = {
   title: "robbery",
@@ -145,20 +146,6 @@ describe(" record tests", () => {
       });
   });
 
-  it.skip("user should not be able to edit the location of a record they did not create", done => {
-    chai
-      .request(app)
-      .patch("/api/v2/red-flags/1/location")
-      .set("token", tok4)
-      .send({ location: "dsfasdfa" })
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.have.property("message", "Not authorized as admin");
-        res.body.should.be.an("object");
-        done();
-      });
-  });
-
   it("user should not be able to edit the location of a record that does not exist", done => {
     chai
       .request(app)
@@ -194,7 +181,7 @@ describe(" record tests", () => {
     chai
       .request(app)
       .patch("/api/v2/red-flags/1/comment")
-      .set("token", tok2)
+      .set("token", tok4)
       .send({ comment: "dsfasdfa" })
       .end((err, res) => {
         res.should.have.status(401);
@@ -212,6 +199,71 @@ describe(" record tests", () => {
       .end((err, res) => {
         res.should.have.status(404);
         res.body.should.have.property("message", "Record not found");
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("user should not be able to edit of a record if email does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/comment")
+      .set("token", tok2)
+      .send({ comment: "dsfasdfa" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property(
+          "error",
+          "Not authorized, email does not exist"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("Admin should be able to edit the status of a given record", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/status")
+      .set("token", tok1)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property(
+          "message",
+          "Updated red-flag record’s status"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("Admin should not be able to edit the status of any given record if email does not exist", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/status")
+      .set("token", tok5)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property(
+          "error",
+          "Not authorized, email does not exist"
+        );
+        res.body.should.be.an("object");
+        done();
+      });
+  });
+
+  it("a user should not be able to edit the status of any given record", done => {
+    chai
+      .request(app)
+      .patch("/api/v2/red-flags/1/status")
+      .set("token", tok)
+      .send({ status: "resolved" })
+      .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.have.property("error", "Not authorized as user");
         res.body.should.be.an("object");
         done();
       });

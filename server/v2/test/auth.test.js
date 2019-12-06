@@ -15,6 +15,14 @@ const user = {
   username: "gkar",
   password: "1234567"
 };
+const user2 = {
+  firstname: "Giramata",
+  lastname: "Karen",
+  email: "kgirama%7@gmail.com",
+  phoneNumber: "07888800",
+  username: "gkaren",
+  password: "1234567"
+};
 
 const logUser = {
   email: "kgiramata%7@gmail.com",
@@ -32,6 +40,20 @@ describe("sign Up tests", () => {
       .request(app)
       .post("/api/v2/auth/signup")
       .send(user)
+      .end((err, res) => {
+        res.should.have.status(201);
+        res.body.should.have.property("message", "User successfully created");
+        res.body.should.be.a("object");
+
+        done();
+      });
+  });
+
+  it("Another user should be able to create an account", done => {
+    chai
+      .request(app)
+      .post("/api/v2/auth/signup")
+      .send(user2)
       .end((err, res) => {
         res.should.have.status(201);
         res.body.should.have.property("message", "User successfully created");

@@ -122,6 +122,31 @@ class recordController {
       message: "Record not found"
     });
   }
+
+  static async updateRedflagstatus(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = await executeQuerry(queries[1].getRecord, [id]);
+
+    if (flag.length === 1) {
+      const { status } = req.body;
+      const flag2 = await executeQuerry(queries[1].editRecordStatus, [
+        status,
+        id
+      ]);
+      return res.status(200).json({
+        status: 200,
+        message: "Updated red-flag record’s status",
+        data: {
+          id: flag2[0].id,
+          status: flag2[0].status
+        }
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      message: "record not found"
+    });
+  }
 }
 
 export default recordController;
