@@ -7,7 +7,7 @@
     "start": "npm run create_tables && npm run create_admin && npm run build && node --require @babel/polyfill build/app.js",
     "build": "babel ./server -d build",
     "dev": "npm run create_tables && npm run create_admin && nodemon --exec babel-node ./server/app.js",
-    "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create_tables && NODE_ENV=TEST npm run create_admin && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v2/test/*.test.js ",
+    "test": "NODE_ENV=TEST npm run drop && NODE_ENV=TEST npm run create_tables && NODE_ENV=TEST npm run create_admin && NODE_ENV=TEST nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 10000 --exit server/v1/test/*.test.js server/v2/test/*.test.js ",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "drop": "babel-node server/v2/db/dropTables.js",
     "create_tables": "babel-node server/v2/db/createTables.js",
