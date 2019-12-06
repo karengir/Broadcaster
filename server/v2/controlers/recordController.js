@@ -147,6 +147,31 @@ class recordController {
       message: "record not found"
     });
   }
+
+  static async deleteRedflags(req, res) {
+    const id = parseInt(req.params.redflagid, 10);
+    const flag = await executeQuerry(queries[1].getRecord, [id]);
+    const userId = req.userId;
+
+    if (flag.length === 1) {
+      if (flag[0].createdby == userId) {
+        const flag2 = await executeQuerry(queries[1].deleteRecord, [id]);
+
+        return res.status(200).json({
+          status: 200,
+          message: "red-flag record has been deleted"
+        });
+      }
+      return res.status(400).json({
+        status: 401,
+        error: "cannot delete record you did not create"
+      });
+    }
+    return res.status(404).json({
+      status: 404,
+      error: "No record found"
+    });
+  }
 }
 
 export default recordController;
